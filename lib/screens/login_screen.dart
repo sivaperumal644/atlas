@@ -1,5 +1,6 @@
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/screens/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -25,8 +26,6 @@ class LoginScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               physics: BouncingScrollPhysics(),
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 24),
@@ -84,7 +83,14 @@ class LoginScreen extends StatelessWidget {
                   children: <Widget>[
                     SecondaryButton(
                       text: 'CONTINUE',
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OnBoardingScreen(),
+                          ),
+                        );
+                      },
                       color: WHITE_COLOR.withOpacity(0.6),
                     ),
                     Container(width: 24)
