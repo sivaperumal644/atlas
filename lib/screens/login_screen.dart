@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: BLACK_COLOR,
       body: Column(
         children: <Widget>[
-          Container(height: 48),
+          Container(height: 80),
           Center(
             child: Image.asset(
               'assets/images/app_logo.png',
@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(24, 60, 24, 16),
+            margin: EdgeInsets.fromLTRB(24, 80, 24, 16),
             height: 1.5,
             color: GREY_COLOR.withOpacity(0.5),
           ),

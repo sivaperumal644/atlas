@@ -1,5 +1,6 @@
 import 'package:atlas/components/primary_button.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/screens/navigate_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -80,7 +81,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Container(height: 22),
             PrimaryButton(
               text: 'CONTINUE',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NavigateScreen(),
+                  ),
+                );
+              },
             ),
             Container(height: 60)
           ],

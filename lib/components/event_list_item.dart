@@ -5,12 +5,14 @@ class EventListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
+      // padding: EdgeInsets.only(left: 2, right: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
             color: BLACK_COLOR,
-            blurRadius: 10.0,
+            blurRadius: 5.0,
           )
         ],
       ),
@@ -36,8 +38,8 @@ class EventListItem extends StatelessWidget {
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomCenter,
                 colors: [
-                  GREY_COLOR.withOpacity(0.0),
-                  BLACK_COLOR,
+                  RED_COLOR.withOpacity(0.1),
+                  BLACK_COLOR.withOpacity(0.75),
                 ],
                 stops: [0.0, 1.0],
               ),
@@ -73,7 +75,25 @@ class EventListItem extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: RED_COLOR.withOpacity(0.2),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+            child: Text(
+              'InProgress',
+              style: TextStyle(
+                fontSize: 12,
+                color: WHITE_COLOR,
+              ),
+            ),
+          ),
         ],
       ),
     );
