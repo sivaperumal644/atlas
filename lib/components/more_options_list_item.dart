@@ -26,7 +26,7 @@ class _MoreOptionsListItemState extends State<MoreOptionsListItem> {
         color: WHITE_COLOR,
         boxShadow: [
           new BoxShadow(
-            color: ORANGE_COLOR,
+            color: RED_COLOR.withOpacity(0.35),
             blurRadius: 6.0,
           ),
         ],
@@ -36,7 +36,7 @@ class _MoreOptionsListItemState extends State<MoreOptionsListItem> {
         children: <Widget>[
           Icon(
             widget.icon,
-            color: ORANGE_COLOR.withOpacity(0.35),
+            color: RED_COLOR.withOpacity(0.35),
             size: 36,
           ),
           Column(

@@ -53,8 +53,8 @@ class _BottomBarState extends State<BottomBar> {
   BottomNavigationBarItem barItem(Map<String, Object> iconData) {
     return BottomNavigationBarItem(
       icon: Container(
-        margin: EdgeInsets.only(top: 2),
-        padding: EdgeInsets.all(7),
+        //margin: EdgeInsets.only(top: 2),
+        padding: EdgeInsets.all(5),
         child: Column(
           children: <Widget>[
             Icon(
@@ -68,6 +68,7 @@ class _BottomBarState extends State<BottomBar> {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
+          color: iconData['index'] == widget.index ? ORANGE_COLOR.withOpacity(0.2) : null 
         ),
       ),
       title: Container(),
