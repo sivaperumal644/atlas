@@ -19,6 +19,7 @@ class PrimaryButton extends StatelessWidget {
         Text(
           '$text',
           style: TextStyle(
+            letterSpacing: 1.6,
             color: WHITE_COLOR,
             fontSize: 16,
             fontFamily: 'roboto',

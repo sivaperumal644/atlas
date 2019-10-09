@@ -19,7 +19,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(24, 80, 24, 16),
+            margin: EdgeInsets.fromLTRB(24, 70, 24, 8),
             height: 1.5,
             color: GREY_COLOR.withOpacity(0.5),
           ),

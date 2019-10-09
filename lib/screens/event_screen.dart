@@ -4,7 +4,7 @@ import 'package:atlas/components/section_header.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

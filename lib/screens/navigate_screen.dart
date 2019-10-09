@@ -5,7 +5,7 @@ import 'package:atlas/screens/more_screen.dart';
 import 'package:atlas/screens/tokens_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
+import 'event_screen.dart';
 
 class NavigateScreen extends StatefulWidget {
   final int selectedIndex;
@@ -48,7 +48,7 @@ class _NavigateScreenState extends State<NavigateScreen> {
   Widget layout() {
     switch (selectedIndex) {
       case 0:
-        return HomeScreen();
+        return EventScreen();
       case 1:
         return AnnouncementScreen();
       case 2:

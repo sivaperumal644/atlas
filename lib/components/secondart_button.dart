@@ -26,6 +26,7 @@ class SecondaryButton extends StatelessWidget {
             text,
             style: TextStyle(
               color: color,
+              letterSpacing: 1.6,
               fontSize: 14,
               fontFamily: 'roboto',
             ),
