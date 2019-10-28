@@ -2,6 +2,7 @@ import 'package:atlas/components/dark_mode_item.dart';
 import 'package:atlas/components/more_options_list_item.dart';
 import 'package:atlas/components/section_header.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -36,8 +37,26 @@ class MoreScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+            margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
             child: DarkModeItem(),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
+              },
+              child: MoreOptionsListItem(
+                title: 'Log out',
+                subTitle: 'Log out from your account',
+                icon: Icons.remove_circle_outline,
+              ),
+            ),
           ),
         ],
       ),

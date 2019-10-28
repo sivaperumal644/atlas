@@ -1,21 +1,27 @@
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
-import 'package:atlas/screens/admin_login_screen.dart';
-import 'package:atlas/screens/on_boarding_screen.dart';
+import 'package:atlas/screens/navigate_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../app_state.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+class AdminLoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _AdminLoginScreenState createState() => _AdminLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AdminLoginScreenState extends State<AdminLoginScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
+    Map inputFields = {
+      'username': '',
+      'password': '',
+    };
+    TextEditingController userNameController;
+    TextEditingController passwordController;
     return Scaffold(
       backgroundColor: BLACK_COLOR,
       body: Column(
@@ -35,14 +41,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AdminLoginScreen(),
+                  builder: (context) => LoginScreen(),
                 ),
               );
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
               child: Text(
-                'Switch to Admin login',
+                'Switch to participant login',
                 style: TextStyle(
                   color: WHITE_COLOR,
                 ),
@@ -73,19 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   margin: EdgeInsets.symmetric(horizontal: 24),
                   padding: EdgeInsets.only(top: 5, bottom: 16),
                   child: Text(
-                    'Scan the QR Code Token or type it  ',
+                    'Enter your sign-in credentials to continue',
                     style: TextStyle(
                       color: WHITE_COLOR,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                scanComponent(),
-                Center(
-                  child: Text(
-                    'OR TYPE',
-                    style: TextStyle(
-                      color: WHITE_COLOR.withOpacity(0.6),
                       fontSize: 14,
                     ),
                   ),
@@ -101,27 +97,56 @@ class _LoginScreenState extends State<LoginScreen> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: WHITE_COLOR),
                       ),
-                      hintText: 'Sign In Token',
+                      hintText: 'Email Address/Phone Number',
                       hintStyle: TextStyle(
-                        fontSize: 24,
+                        fontSize: 18,
                         color: WHITE_COLOR.withOpacity(0.6),
                       ),
                     ),
+                    controller: userNameController,
+                    onChanged: (val) {
+                      inputFields['username'] = val;
+                    },
                   ),
                 ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 24),
+                  child: TextField(
+                    style: TextStyle(color: WHITE_COLOR, fontSize: 24),
+                    decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: WHITE_COLOR),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: WHITE_COLOR),
+                      ),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(
+                        fontSize: 18,
+                        color: WHITE_COLOR.withOpacity(0.6),
+                      ),
+                    ),
+                    controller: passwordController,
+                    onChanged: (val) {
+                      inputFields['password'] = val;
+                    },
+                  ),
+                ),
+                Container(height: 42),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SecondaryButton(
                       text: 'CONTINUE',
                       onPressed: () {
                         setState(() {
-                          appState.setIsAdmin(false);
+                          appState.setIsAdmin(true);
                         });
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OnBoardingScreen(),
+                            builder: (context) => NavigateScreen(),
                           ),
                         );
                       },

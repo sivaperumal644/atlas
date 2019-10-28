@@ -2,12 +2,11 @@ import 'package:atlas/constants/colors.dart';
 import 'package:atlas/screens/event_details_screen.dart';
 import 'package:flutter/material.dart';
 
-class EventListItem extends StatelessWidget {
+class AdminEventListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
-      // padding: EdgeInsets.only(left: 2, right: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
@@ -28,7 +27,7 @@ class EventListItem extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-              height: 170,
+              height: 220,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
@@ -80,6 +79,53 @@ class EventListItem extends StatelessWidget {
                         fontSize: 14,
                         color: WHITE_COLOR,
                       ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 12),
+                      height: 1,
+                      color: WHITE_COLOR,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Registrations:',
+                          style: TextStyle(fontSize: 12, color: WHITE_COLOR),
+                        ),
+                        Container(width: 12),
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Text(
+                            '40 / 80',
+                            style: TextStyle(
+                              color: WHITE_COLOR,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Hall A302 · 04:30 PM 25/10/2019',
+                          style: TextStyle(
+                            color: WHITE_COLOR,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: WHITE_COLOR,
+                        )
+                      ],
                     )
                   ],
                 ),
