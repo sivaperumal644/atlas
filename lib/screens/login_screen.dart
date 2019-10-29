@@ -1,3 +1,4 @@
+import 'package:atlas/components/dialog_style.dart';
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/screens/admin_login_screen.dart';
@@ -13,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String signInToken = '';
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
@@ -107,6 +109,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: WHITE_COLOR.withOpacity(0.6),
                       ),
                     ),
+                    onChanged: (val) {
+                      setState(() {
+                        signInToken = val;
+                      });
+                    },
                   ),
                 ),
                 Row(
@@ -115,15 +122,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     SecondaryButton(
                       text: 'CONTINUE',
                       onPressed: () {
-                        setState(() {
-                          appState.setIsAdmin(false);
-                        });
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OnBoardingScreen(),
-                          ),
-                        );
+                        if (signInToken == '12345') {
+                          setState(() {
+                            appState.setIsAdmin(false);
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OnBoardingScreen(),
+                            ),
+                          );
+                        } else {
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return DialogStyle(
+                                  title: 'Invalid token.',
+                                  contentParaOne:
+                                      'The token you entered is invalid. Please check your sign in token with volunteers.',
+                                  contentParaTwo: '',
+                                  buttonText: 'Got it',
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              });
+                        }
                       },
                       color: WHITE_COLOR.withOpacity(0.6),
                     ),

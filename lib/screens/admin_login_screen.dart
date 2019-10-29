@@ -1,3 +1,4 @@
+import 'package:atlas/components/dialog_style.dart';
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/screens/navigate_screen.dart';
@@ -13,15 +14,11 @@ class AdminLoginScreen extends StatefulWidget {
 }
 
 class _AdminLoginScreenState extends State<AdminLoginScreen> {
+  String username = '';
+  String password = '';
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
-    Map inputFields = {
-      'username': '',
-      'password': '',
-    };
-    TextEditingController userNameController;
-    TextEditingController passwordController;
     return Scaffold(
       backgroundColor: BLACK_COLOR,
       body: Column(
@@ -97,20 +94,21 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: WHITE_COLOR),
                       ),
-                      hintText: 'Email Address/Phone Number',
+                      hintText: 'Sign In Token',
                       hintStyle: TextStyle(
-                        fontSize: 18,
+                        fontSize: 24,
                         color: WHITE_COLOR.withOpacity(0.6),
                       ),
                     ),
-                    controller: userNameController,
                     onChanged: (val) {
-                      inputFields['username'] = val;
+                      setState(() {
+                        username = val;
+                      });
                     },
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24),
+                  margin: EdgeInsets.all(24),
                   child: TextField(
                     style: TextStyle(color: WHITE_COLOR, fontSize: 24),
                     decoration: InputDecoration(
@@ -120,15 +118,16 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: WHITE_COLOR),
                       ),
-                      hintText: 'Password',
+                      hintText: 'Sign In Token',
                       hintStyle: TextStyle(
-                        fontSize: 18,
+                        fontSize: 24,
                         color: WHITE_COLOR.withOpacity(0.6),
                       ),
                     ),
-                    controller: passwordController,
                     onChanged: (val) {
-                      inputFields['password'] = val;
+                      setState(() {
+                        password = val;
+                      });
                     },
                   ),
                 ),
@@ -139,16 +138,35 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                     SecondaryButton(
                       text: 'CONTINUE',
                       onPressed: () {
-                        setState(() {
-                          appState.setIsAdmin(true);
-                        });
+                        if (username == 'admin' && password == 'admin') {
+                          setState(() {
+                            appState.setIsAdmin(true);
+                          });
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NavigateScreen(),
-                          ),
-                        );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NavigateScreen(),
+                            ),
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return DialogStyle(
+                                title: 'Invalid username/password.',
+                                contentParaOne:
+                                    'The username or password you entered is invalid. Please check your login credentials.',
+                                contentParaTwo: '',
+                                buttonText: 'Got it',
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            },
+                          );
+                        }
                       },
                       color: WHITE_COLOR.withOpacity(0.6),
                     ),
