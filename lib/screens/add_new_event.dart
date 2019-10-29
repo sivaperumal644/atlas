@@ -1,13 +1,27 @@
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/EventModal.dart';
 import 'package:flutter/material.dart';
 
 class AddNewEvent extends StatefulWidget {
+  final Function onEventAdding;
+
+  const AddNewEvent({this.onEventAdding});
   @override
   _AddNewEventState createState() => _AddNewEventState();
 }
 
 class _AddNewEventState extends State<AddNewEvent> {
+  Map eventFields = {
+    'eventTitle': '',
+    'category': '',
+    'venue': '',
+    'imageUrl': '',
+    'timing': '',
+    'description': '',
+    'rules': '',
+    'instructionBeforeRegistering': ''
+  };
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,14 +29,30 @@ class _AddNewEventState extends State<AddNewEvent> {
         children: <Widget>[
           appBar(),
           Container(height: 24),
-          editFields('Event title'),
-          editFields('Category'),
-          editFields('Venue'),
-          editFields('Image url'),
-          editFields('Timing'),
-          editFields('Description', bottom: 130.0),
-          editFields('Rules', bottom: 130.0),
-          editFields('Instructions before registering', bottom: 130.0),
+          editFields('Event title', (val) {
+            eventFields['eventTitle'] = val;
+          }),
+          editFields('Category', (val) {
+            eventFields['category'] = val;
+          }),
+          editFields('Venue', (val) {
+            eventFields['venue'] = val;
+          }),
+          editFields('Image url', (val) {
+            eventFields['imageUrl'] = val;
+          }),
+          editFields('Timing', (val) {
+            eventFields['timing'] = val;
+          }),
+          editFields('Description', (val) {
+            eventFields['description'] = val;
+          }, bottom: 130.0),
+          editFields('Rules', (val) {
+            eventFields['rules'] = val;
+          }, bottom: 130.0),
+          editFields('Instructions before registering', (val) {
+            eventFields['instructionBeforeRegistering'] = val;
+          }, bottom: 130.0),
           Container(
             margin: EdgeInsets.all(24),
             height: 1,
@@ -43,6 +73,19 @@ class _AddNewEventState extends State<AddNewEvent> {
             margin: EdgeInsets.all(24),
             child: SecondaryButton(
               onPressed: () {
+                widget.onEventAdding(
+                  EventModel(
+                    eventTitle: eventFields['eventTitle'],
+                    category: eventFields['category'],
+                    venue: eventFields['venue'],
+                    imageUrl: eventFields['imageUrl'],
+                    timing: eventFields['timing'],
+                    description: eventFields['description'],
+                    rules: eventFields['rules'],
+                    instructionBeforeRegistering:
+                        eventFields['instructionBeforeRegistering'],
+                  ),
+                );
                 Navigator.pop(context);
               },
               text: 'ADD MEMBERS',
@@ -53,7 +96,7 @@ class _AddNewEventState extends State<AddNewEvent> {
     );
   }
 
-  Widget editFields(hintText, {bottom = 10.0}) {
+  Widget editFields(hintText, onChanged, {bottom = 10.0}) {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, bottom),
       decoration: BoxDecoration(
@@ -63,6 +106,7 @@ class _AddNewEventState extends State<AddNewEvent> {
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: TextField(
         decoration: InputDecoration.collapsed(hintText: hintText),
+        onChanged: onChanged,
       ),
     );
   }

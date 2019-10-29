@@ -10,7 +10,12 @@ import 'package:provider/provider.dart';
 
 import '../app_state.dart';
 
-class EventScreen extends StatelessWidget {
+class EventScreen extends StatefulWidget {
+  @override
+  _EventScreenState createState() => _EventScreenState();
+}
+
+class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
@@ -25,7 +30,15 @@ class EventScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddNewEvent(),
+                    builder: (context) => AddNewEvent(
+                      onEventAdding: (EventModel eventModel) {
+                        print(eventModel.eventTitle);
+                        setState(() {
+                          events.add(eventModel);
+                        });
+                        print(events.length);
+                      },
+                    ),
                   ),
                 );
               },
@@ -52,8 +65,12 @@ class EventScreen extends StatelessWidget {
             itemCount: events.length,
             itemBuilder: (context, index) {
               return appState.getIsAdmin
-                  ? AdminEventListItem(events: events[index],)
-                  : EventListItem();
+                  ? AdminEventListItem(
+                      events: events[index],
+                    )
+                  : EventListItem(
+                      eventModel: events[index],
+                    );
             },
           ),
           Container(height: 70)
