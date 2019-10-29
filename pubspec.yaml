@@ -26,18 +26,18 @@ dependencies:
   feather_icons_flutter: ^4.7.4
   provider: ^3.1.0+1
   charts_flutter: ^0.8.1
+  qr_code_scanner: ^0.0.12
+  qr_flutter: ^3.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -52,7 +52,6 @@ flutter:
     - assets/images/place_holder.jpg
     - assets/images/app_logo.png
     - assets/images/lunch_token.png
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -80,11 +79,9 @@ flutter:
   fonts:
     - family: IBMPlexSans
       fonts:
-       - asset: assets/fonts/IBMPlexSans-Bold.ttf
-       - asset: assets/fonts/IBMPlexSans-BoldItalic.ttf
-       - asset: assets/fonts/IBMPlexSans-Italic.ttf
-       - asset: assets/fonts/IBMPlexSans-Regular.ttf
-
-       
+        - asset: assets/fonts/IBMPlexSans-Bold.ttf
+        - asset: assets/fonts/IBMPlexSans-BoldItalic.ttf
+        - asset: assets/fonts/IBMPlexSans-Italic.ttf
+        - asset: assets/fonts/IBMPlexSans-Regular.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

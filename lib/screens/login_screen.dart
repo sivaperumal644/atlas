@@ -2,6 +2,7 @@ import 'package:atlas/components/dialog_style.dart';
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/screens/admin_login_screen.dart';
+import 'package:atlas/screens/login_qr_scan_screen.dart';
 import 'package:atlas/screens/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -71,14 +72,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24),
-                  padding: EdgeInsets.only(top: 5, bottom: 16),
-                  child: Text(
-                    'Scan the QR Code Token or type it  ',
-                    style: TextStyle(
-                      color: WHITE_COLOR,
-                      fontSize: 14,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return QRCodeScannerScreen();
+                    }));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 24),
+                    padding: EdgeInsets.only(top: 5, bottom: 16),
+                    child: Text(
+                      'Scan the QR Code Token or type it  ',
+                      style: TextStyle(
+                        color: WHITE_COLOR,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
@@ -165,24 +174,30 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget scanComponent() {
-    return Container(
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(24),
-      decoration: BoxDecoration(
-          color: GREY_COLOR, borderRadius: BorderRadius.circular(12)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.camera_alt),
-          Container(width: 12),
-          Text(
-            'SCAN QR CODE',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => QRCodeScannerScreen()));
+      },
+      child: Container(
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.all(24),
+        decoration: BoxDecoration(
+            color: GREY_COLOR, borderRadius: BorderRadius.circular(12)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.camera_alt),
+            Container(width: 12),
+            Text(
+              'SCAN QR CODE',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
