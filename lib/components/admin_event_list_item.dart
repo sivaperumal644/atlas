@@ -1,8 +1,17 @@
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/EventModal.dart';
 import 'package:atlas/screens/event_details_screen.dart';
 import 'package:flutter/material.dart';
 
-class AdminEventListItem extends StatelessWidget {
+class AdminEventListItem extends StatefulWidget {
+  final EventModel events;
+
+  const AdminEventListItem({this.events});
+  @override
+  _AdminEventListItemState createState() => _AdminEventListItemState();
+}
+
+class _AdminEventListItemState extends State<AdminEventListItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,8 +41,8 @@ class AdminEventListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/images/place_holder.jpg',
+                  image: NetworkImage(
+                    widget.events.imageUrl,
                   ),
                 ),
               ),
@@ -65,7 +74,7 @@ class AdminEventListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Battle Royale ',
+                      widget.events.eventTitle,
                       style: TextStyle(
                         color: WHITE_COLOR,
                         fontWeight: FontWeight.bold,
@@ -74,7 +83,7 @@ class AdminEventListItem extends StatelessWidget {
                     ),
                     Container(height: 8),
                     Text(
-                      'Be the last one alive. Compete solo, or form a team of up to 4 members.',
+                      widget.events.category,
                       style: TextStyle(
                         fontSize: 14,
                         color: WHITE_COLOR,
@@ -114,7 +123,7 @@ class AdminEventListItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          'Hall A302 · 04:30 PM 25/10/2019',
+                          widget.events.venue,
                           style: TextStyle(
                             color: WHITE_COLOR,
                             fontWeight: FontWeight.bold,

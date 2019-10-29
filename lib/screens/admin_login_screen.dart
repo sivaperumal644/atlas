@@ -94,7 +94,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: WHITE_COLOR),
                       ),
-                      hintText: 'Sign In Token',
+                      hintText: 'username',
                       hintStyle: TextStyle(
                         fontSize: 24,
                         color: WHITE_COLOR.withOpacity(0.6),
@@ -118,7 +118,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: WHITE_COLOR),
                       ),
-                      hintText: 'Sign In Token',
+                      hintText: 'password',
                       hintStyle: TextStyle(
                         fontSize: 24,
                         color: WHITE_COLOR.withOpacity(0.6),

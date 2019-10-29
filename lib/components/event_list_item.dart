@@ -1,8 +1,12 @@
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/EventModal.dart';
 import 'package:atlas/screens/event_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class EventListItem extends StatelessWidget {
+  final EventModel eventModel;
+
+  const EventListItem({this.eventModel});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +37,8 @@ class EventListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/images/place_holder.jpg',
+                  image: NetworkImage(
+                    eventModel.imageUrl
                   ),
                 ),
               ),
@@ -66,7 +70,7 @@ class EventListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Battle Royale ',
+                      eventModel.eventTitle,
                       style: TextStyle(
                         color: WHITE_COLOR,
                         fontWeight: FontWeight.bold,
@@ -75,7 +79,7 @@ class EventListItem extends StatelessWidget {
                     ),
                     Container(height: 8),
                     Text(
-                      'Be the last one alive. Compete solo, or form a team of up to 4 members.',
+                      eventModel.category,
                       style: TextStyle(
                         fontSize: 14,
                         color: WHITE_COLOR,

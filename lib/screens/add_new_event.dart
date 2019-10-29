@@ -18,6 +18,7 @@ class _AddNewEventState extends State<AddNewEvent> {
           editFields('Event title'),
           editFields('Category'),
           editFields('Venue'),
+          editFields('Image url'),
           editFields('Timing'),
           editFields('Description', bottom: 130.0),
           editFields('Rules', bottom: 130.0),

@@ -1,8 +1,12 @@
 import 'package:atlas/components/primary_button.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/EventModal.dart';
 import 'package:flutter/material.dart';
 
 class EventDetailScreen extends StatefulWidget {
+  final EventModel events;
+
+  const EventDetailScreen({this.events});
   @override
   _EventDetailScreenState createState() => _EventDetailScreenState();
 }
@@ -22,14 +26,14 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
                 child: Text(
-                  '04:30 PM to 05:30 PM',
+                  widget.events.timing,
                   style: TextStyle(fontSize: 24),
                 ),
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 24, vertical: 2),
                 child: Text(
-                  '27/05/2019',
+                  '30/10/2019',
                   style: TextStyle(fontSize: 14),
                 ),
               ),
@@ -38,33 +42,19 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
-                  'Hall A-304',
+                  widget.events.venue,
                   style: TextStyle(fontSize: 24),
                 ),
               ),
               Container(height: 16),
               headerText('Event Description'),
-              contentText(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              ),
-              Container(height: 16),
-              contentText(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              ),
+              contentText(widget.events.description),
               Container(height: 16),
               headerText('Rules'),
-              contentText(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              ),
-              Container(height: 16),
-              contentText(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-              ),
+              contentText(widget.events.rules),
               Container(height: 16),
               headerText('Read before registering'),
-              contentText(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
-              ),
+              contentText(widget.events.instructionBeforeRegistering),
               Container(
                 margin: EdgeInsets.all(24),
                 child: Text(
@@ -122,8 +112,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: AssetImage(
-            'assets/images/place_holder.jpg',
+          image: NetworkImage(
+            widget.events.imageUrl,
           ),
         ),
       ),
@@ -148,7 +138,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Battle Royale ',
+                    widget.events.eventTitle,
                     style: TextStyle(
                       color: WHITE_COLOR,
                       fontWeight: FontWeight.bold,
@@ -157,7 +147,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   ),
                   Container(height: 8),
                   Text(
-                    'Be the last one alive. Compete solo, or form a team of up to 4 members.',
+                    widget.events.category,
                     style: TextStyle(
                       fontSize: 14,
                       color: WHITE_COLOR,

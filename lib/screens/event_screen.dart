@@ -3,6 +3,7 @@ import 'package:atlas/components/event_list_item.dart';
 import 'package:atlas/components/search_bar.dart';
 import 'package:atlas/components/section_header.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/EventModal.dart';
 import 'package:atlas/screens/add_new_event.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
+    List<EventModel> events = [];
     return Scaffold(
       backgroundColor: WHITE_COLOR,
       floatingActionButton: appState.getIsAdmin
@@ -47,10 +49,10 @@ class EventScreen extends StatelessWidget {
           ListView.builder(
             physics: BouncingScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 2,
+            itemCount: events.length,
             itemBuilder: (context, index) {
               return appState.getIsAdmin
-                  ? AdminEventListItem()
+                  ? AdminEventListItem(events: events[index],)
                   : EventListItem();
             },
           ),
