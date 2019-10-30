@@ -25,7 +25,10 @@ class EventListItem extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EventDetailScreen()),
+            MaterialPageRoute(
+                builder: (context) => EventDetailScreen(
+                      events: eventModel,
+                    )),
           );
         },
         borderRadius: BorderRadius.circular(12),
@@ -37,9 +40,10 @@ class EventListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: NetworkImage(
-                    eventModel.imageUrl
-                  ),
+                  image: NetworkImage(eventModel.imageUrl.contains('.com') ==
+                          false
+                      ? 'https://images.unsplash.com/photo-1554470938-85886688c6e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+                      : eventModel.imageUrl),
                 ),
               ),
             ),

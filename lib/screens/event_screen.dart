@@ -19,7 +19,8 @@ class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
-    List<EventModel> events = [];
+    List<EventModel> events = appState.getEventsList;
+
     return Scaffold(
       backgroundColor: WHITE_COLOR,
       floatingActionButton: appState.getIsAdmin
@@ -59,23 +60,33 @@ class _EventScreenState extends State<EventScreen> {
             child: SearchBar(),
           ),
           Container(height: 32),
-          ListView.builder(
-            physics: BouncingScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: events.length,
-            itemBuilder: (context, index) {
-              return appState.getIsAdmin
-                  ? AdminEventListItem(
-                      events: events[index],
-                    )
-                  : EventListItem(
-                      eventModel: events[index],
-                    );
-            },
-          ),
+          ...buildEventsAsComponents(events),
+          // ListView.builder(
+          //   physics: BouncingScrollPhysics(),
+          //   itemCount: events.length,
+          //   itemBuilder: (context, index) {
+          //     return appState.getIsAdmin
+          //         ? AdminEventListItem(
+          //             events: events[index],
+          //           )
+          //         : EventListItem(
+          //             eventModel: events[index],
+          //           );
+          //   },
+          // ),
           Container(height: 70)
         ],
       ),
     );
+  }
+
+  buildEventsAsComponents(List<EventModel> eventsList) {
+    List<EventListItem> componentsList = [];
+    eventsList.forEach((event) {
+      componentsList.add(EventListItem(
+        eventModel: event,
+      ));
+    });
+    return componentsList;
   }
 }

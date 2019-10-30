@@ -1,5 +1,9 @@
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/AnnouncementModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../app_state.dart';
 
 class AddNewPost extends StatefulWidget {
   @override
@@ -7,6 +11,8 @@ class AddNewPost extends StatefulWidget {
 }
 
 class _AddNewPostState extends State<AddNewPost> {
+  String postTitle = '';
+  String postContent = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,14 +20,22 @@ class _AddNewPostState extends State<AddNewPost> {
         children: <Widget>[
           appBar(),
           Container(height: 24),
-          editFields('Post title'),
-          editFields('Post content', bottom: 120.0)
+          editFields('Post title', (val) {
+            setState(() {
+              postTitle = val;
+            });
+          }),
+          editFields('Post content', (val) {
+            setState(() {
+              postContent = val;
+            });
+          }, bottom: 120.0)
         ],
       ),
     );
   }
 
-  Widget editFields(hintText, {bottom = 10.0}) {
+  Widget editFields(hintText, onChanged, {bottom = 10.0}) {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, bottom),
       decoration: BoxDecoration(
@@ -31,6 +45,7 @@ class _AddNewPostState extends State<AddNewPost> {
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: TextField(
         decoration: InputDecoration.collapsed(hintText: hintText),
+        onChanged: onChanged,
       ),
     );
   }
@@ -71,6 +86,9 @@ class _AddNewPostState extends State<AddNewPost> {
           ),
           InkWell(
             onTap: () {
+              final appState = Provider.of<AppState>(context);
+              appState.setAnnouncement(AnnouncementModel(
+                  postContent: postContent, postTitle: postTitle));
               Navigator.pop(context);
             },
             child: Icon(

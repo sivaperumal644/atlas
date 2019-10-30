@@ -1,7 +1,9 @@
+import 'package:atlas/app_state.dart';
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/models/EventModal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddNewEvent extends StatefulWidget {
   final Function onEventAdding;
@@ -24,6 +26,7 @@ class _AddNewEventState extends State<AddNewEvent> {
   };
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -73,19 +76,30 @@ class _AddNewEventState extends State<AddNewEvent> {
             margin: EdgeInsets.all(24),
             child: SecondaryButton(
               onPressed: () {
-                widget.onEventAdding(
-                  EventModel(
-                    eventTitle: eventFields['eventTitle'],
-                    category: eventFields['category'],
-                    venue: eventFields['venue'],
-                    imageUrl: eventFields['imageUrl'],
-                    timing: eventFields['timing'],
-                    description: eventFields['description'],
-                    rules: eventFields['rules'],
-                    instructionBeforeRegistering:
-                        eventFields['instructionBeforeRegistering'],
-                  ),
-                );
+                appState.setEvent(EventModel(
+                  eventTitle: eventFields['eventTitle'],
+                  category: eventFields['category'],
+                  venue: eventFields['venue'],
+                  imageUrl: eventFields['imageUrl'],
+                  timing: eventFields['timing'],
+                  description: eventFields['description'],
+                  rules: eventFields['rules'],
+                  instructionBeforeRegistering:
+                      eventFields['instructionBeforeRegistering'],
+                ));
+                // widget.onEventAdding(
+                //   EventModel(
+                //     eventTitle: eventFields['eventTitle'],
+                //     category: eventFields['category'],
+                //     venue: eventFields['venue'],
+                //     imageUrl: eventFields['imageUrl'],
+                //     timing: eventFields['timing'],
+                //     description: eventFields['description'],
+                //     rules: eventFields['rules'],
+                //     instructionBeforeRegistering:
+                //         eventFields['instructionBeforeRegistering'],
+                //   ),
+                // );
                 Navigator.pop(context);
               },
               text: 'ADD MEMBERS',

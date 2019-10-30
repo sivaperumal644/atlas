@@ -1,7 +1,11 @@
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/AnnouncementModel.dart';
 import 'package:flutter/material.dart';
 
 class AnnouncementListItem extends StatelessWidget {
+  final AnnouncementModel announcement;
+
+  const AnnouncementListItem({this.announcement});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +25,7 @@ class AnnouncementListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Title of post',
+            announcement.postTitle,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -29,14 +33,14 @@ class AnnouncementListItem extends StatelessWidget {
           ),
           Container(height: 6),
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco',
+            announcement.postContent,
             style: TextStyle(fontSize: 14),
           ),
           Container(height: 6),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              '04:30 PM - 27/09/2019',
+              DateTime.now().toIso8601String(),
               style: TextStyle(
                 color: GREY_COLOR,
                 fontSize: 12,

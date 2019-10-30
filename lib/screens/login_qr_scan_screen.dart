@@ -49,6 +49,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         if (qrText == '12345') {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+          dispose();
         }
       });
     });

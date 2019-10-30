@@ -16,6 +16,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
+    final announcements = appState.getAnnouncements;
     return Scaffold(
       backgroundColor: WHITE_COLOR,
       floatingActionButton: appState.getIsAdmin
@@ -44,20 +45,21 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  child: AnnouncementListItem(),
-                );
-              },
+            child: ListView(
+              children: <Widget>[...buildAnnouncementPosts(announcements)],
             ),
           ),
         ],
       ),
     );
+  }
+
+  buildAnnouncementPosts(announcements) {
+    List<AnnouncementListItem> components = [];
+    announcements.forEach((announcement) {
+      components.add(AnnouncementListItem(
+        announcement: announcement,
+      ));
+    });
   }
 }
