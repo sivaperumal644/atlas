@@ -1,7 +1,11 @@
 import 'package:atlas/components/primary_button.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/models/EventModal.dart';
+import 'package:atlas/models/UserModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../app_state.dart';
 
 class EventDetailScreen extends StatefulWidget {
   final EventModel events;
@@ -12,8 +16,12 @@ class EventDetailScreen extends StatefulWidget {
 }
 
 class _EventDetailScreenState extends State<EventDetailScreen> {
+
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
+    UserModel currentUser = appState.getUser;
+
     return Scaffold(
       backgroundColor: WHITE_COLOR,
       body: Stack(
@@ -57,8 +65,8 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               contentText(widget.events.instructionBeforeRegistering),
               Container(
                 margin: EdgeInsets.all(24),
-                child: Text(
-                  'Register now',
+                child: Text(currentUser.isRegisteredForEvent(widget.events.id) == false ?
+                  'Register now' : '',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -69,9 +77,16 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
               contentText('Registrations are open.'),
               Container(
                 margin: EdgeInsets.all(24),
-                child: PrimaryButton(
+                child: currentUser.isRegisteredForEvent(widget.events.id) ? Text('You have already registered') : PrimaryButton(
                   text: 'REGISTER',
-                  onPressed: () {},
+                  onPressed: () {
+setState(() {
+  currentUser.addEventToRegister(widget.events.id);
+
+});
+                    appState.setUser(currentUser);
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               Container(height: 24)

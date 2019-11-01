@@ -4,6 +4,8 @@ import 'package:atlas/constants/colors.dart';
 import 'package:atlas/models/EventModal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
 
 class AddNewEvent extends StatefulWidget {
   final Function onEventAdding;
@@ -76,6 +78,19 @@ class _AddNewEventState extends State<AddNewEvent> {
             margin: EdgeInsets.all(24),
             child: SecondaryButton(
               onPressed: () {
+                String uniqueId = 'EVENT${Random().nextInt(1000)}';
+                Firestore.instance.collection('events').document(uniqueId).setData({
+                  'id': uniqueId,
+                  'eventTitle': eventFields['eventTitle'],
+                  'category': eventFields['category'],
+                  'venue': eventFields['venue'],
+                  'imageUrl': eventFields['imageUrl'],
+                  'timing': eventFields['timing'],
+                  'description': eventFields['description'],
+                  'rules': eventFields['rules'],
+                  'instructionBeforeRegistering':
+                  eventFields['instructionBeforeRegistering'],
+                });
                 appState.setEvent(EventModel(
                   eventTitle: eventFields['eventTitle'],
                   category: eventFields['category'],

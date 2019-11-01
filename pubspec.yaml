@@ -28,6 +28,8 @@ dependencies:
   charts_flutter: ^0.8.1
   qr_code_scanner: ^0.0.12
   qr_flutter: ^3.0.1
+  firebase_core: ^0.4.0+9
+  cloud_firestore: ^0.12.9+6
 
 dev_dependencies:
   flutter_test:

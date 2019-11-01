@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:atlas/constants/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddNewToken extends StatefulWidget {
@@ -7,23 +10,33 @@ class AddNewToken extends StatefulWidget {
 }
 
 class _AddNewTokenState extends State<AddNewToken> {
+  String tokenTitle;
+  String tokenType;
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: ListView(
         children: <Widget>[
           appBar(),
           Container(height: 48),
-          editFields('Token title'),
-          editFields('Token type'),
-          editFields('Total tokens'),
-          editFields('Total tokens availed.')
+          editFields('Token title', (val) {
+            setState(() {
+              tokenTitle = val;
+
+            });
+          }),
+          editFields('Token type', (val) {
+            setState(() {
+              tokenType = val;
+            });
+          }),
         ],
       ),
     );
   }
 
-  Widget editFields(hintText, {bottom = 10.0}) {
+  Widget editFields(hintText, onChanged, {bottom = 10.0}) {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, bottom),
       decoration: BoxDecoration(
@@ -33,9 +46,11 @@ class _AddNewTokenState extends State<AddNewToken> {
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: TextField(
         decoration: InputDecoration.collapsed(hintText: hintText),
+        onChanged: onChanged,
       ),
     );
   }
+
 
   Widget appBar() {
     return Container(
@@ -73,6 +88,12 @@ class _AddNewTokenState extends State<AddNewToken> {
           ),
           InkWell(
             onTap: () {
+              String uniqueId = 'TOKEN:${Random().nextInt(1000)}';
+              Firestore.instance.collection('tokens').document(uniqueId).setData({
+                'id': uniqueId,
+                'tokenTitle': tokenTitle,
+                'tokenType':tokenType,
+              });
               Navigator.pop(context);
             },
             child: Icon(

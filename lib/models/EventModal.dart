@@ -1,4 +1,5 @@
 class EventModel {
+  final String id;
   final String eventTitle;
   final String category;
   final String venue;
@@ -9,6 +10,7 @@ class EventModel {
   final String instructionBeforeRegistering;
 
   EventModel({
+    this.id = 'EVENT000',
     this.eventTitle,
     this.category,
     this.venue,

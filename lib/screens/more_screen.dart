@@ -20,31 +20,50 @@ class MoreScreen extends StatelessWidget {
               subTitleText: 'Other features of this app',
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(24),
-            child: MoreOptionsListItem(
-              title: 'Venue Map',
-              subTitle: 'View a map of this place',
-              icon: Icons.map,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
-            child: MoreOptionsListItem(
-              title: 'Get help',
-              subTitle: 'View volunteers’ contacts',
-              icon: Icons.person,
-            ),
-          ),
+//          Container(
+//            margin: EdgeInsets.all(24),
+//            child: MoreOptionsListItem(
+//              title: 'Venue Map',
+//              subTitle: 'View a map of this place',
+//              icon: Icons.map,
+//            ),
+//          ),
           Container(
             margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
-            child: DarkModeItem(),
+            child: GestureDetector(
+              onTap: () {
+                showBottomSheet(context: context, builder: (context) {
+                  return Container(
+                    height: 200,
+                    padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    child: Column(
+                      children: <Widget>[
+                        Text('Contact volunteer', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                        ListTile(
+                          title: Text('Technical Event Volunteer'),
+                          trailing: Icon(Icons.call),
+                        )
+                      ],
+                    ),
+                  );
+                });
+              },
+              child: MoreOptionsListItem(
+                title: 'Get help',
+                subTitle: 'View volunteers’ contacts',
+                icon: Icons.person,
+              ),
+            ),
           ),
+//          Container(
+//            margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
+//            child: DarkModeItem(),
+//          ),
           Container(
             margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
             child: InkWell(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => LoginScreen(),

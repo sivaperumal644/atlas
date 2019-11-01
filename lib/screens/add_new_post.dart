@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/models/AnnouncementModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -86,6 +89,11 @@ class _AddNewPostState extends State<AddNewPost> {
           ),
           InkWell(
             onTap: () {
+              String uniqueId = 'POST${Random().nextInt(1000)}';
+              Firestore.instance.collection('posts').document(uniqueId).setData({
+                'id': uniqueId,
+                'postContent': postContent, 'postTitle': postTitle
+              });
               final appState = Provider.of<AppState>(context);
               appState.setAnnouncement(AnnouncementModel(
                   postContent: postContent, postTitle: postTitle));

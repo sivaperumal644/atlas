@@ -1,7 +1,9 @@
 import 'package:atlas/components/announcement_list_item.dart';
 import 'package:atlas/components/section_header.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/AnnouncementModel.dart';
 import 'package:atlas/screens/add_new_post.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,23 +35,40 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
               },
             )
           : null,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(height: 32),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: SectionHeader(
-              titleText: 'Announcements',
-              subTitleText: 'Updates will be posted here',
+      body: ListView(
+          children:   [
+            Container(
+              margin: EdgeInsets.only(top: 48, left: 24, right: 24),
+              child: SectionHeader(
+                titleText: 'Announcements',
+                subTitleText: 'Updates will be posted here',
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView(
-              children: <Widget>[...buildAnnouncementPosts(announcements)],
-            ),
-          ),
-        ],
+            Container(height: 32),
+            StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('posts').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError)
+                  return new Text('Error: ${snapshot.error}');
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting: return new Text('Loading...');
+                  default:
+                    return Column(
+                        children: snapshot.data.documents.map((document) {
+                          return Container(
+                            margin: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                            child: AnnouncementListItem(
+                              announcement: AnnouncementModel(
+                                postContent: document['postContent'],
+                                postTitle: document['postTitle']
+                              ),
+                            ),
+                          );
+                        }).toList()
+                    );
+                }
+              },
+            ),]
       ),
     );
   }
@@ -61,5 +80,6 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
         announcement: announcement,
       ));
     });
+    return components;
   }
 }

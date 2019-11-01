@@ -2,8 +2,19 @@ import 'package:atlas/models/AnnouncementModel.dart';
 import 'package:atlas/models/EventModal.dart';
 import 'package:flutter/material.dart';
 
+import 'models/UserModel.dart';
+
 class AppState extends ChangeNotifier {
   bool isAdmin = false;
+  UserModel user = UserModel(
+      id: 'USER001',
+    degree: 'BE/CSE',
+    email: 'test@test.com',
+    institute: 'SNS CT',
+    name: 'Test User',
+    phone: 'TESTNUM',
+    registerno: 'TESTREGNO'
+  );
   List<AnnouncementModel> announcementList = [
     AnnouncementModel(
         postTitle: 'Welcome',
@@ -66,7 +77,13 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setUser(UserModel userModel) {
+    user = userModel;
+    notifyListeners();
+  }
+
   get getIsAdmin => isAdmin;
+  get getUser => user;
   get getAnnouncements => announcementList;
   get getEventsList => eventDatabaseList;
 }

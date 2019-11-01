@@ -1,7 +1,10 @@
+import 'package:atlas/app_state.dart';
 import 'package:atlas/constants/colors.dart';
 import 'package:atlas/models/EventModal.dart';
+import 'package:atlas/models/UserModel.dart';
 import 'package:atlas/screens/event_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EventListItem extends StatelessWidget {
   final EventModel eventModel;
@@ -9,6 +12,8 @@ class EventListItem extends StatelessWidget {
   const EventListItem({this.eventModel});
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
+    UserModel currentUser = appState.getUser;
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
       // padding: EdgeInsets.only(left: 2, right: 2),
@@ -97,14 +102,14 @@ class EventListItem extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 4),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: RED_COLOR.withOpacity(0.3),
+                color: currentUser.isRegisteredForEvent(eventModel.id) ? Colors.green.withOpacity(0.3) : RED_COLOR.withOpacity(0.3),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
                 ),
               ),
-              child: Text(
-                'InProgress',
+              child: Text(currentUser.isRegisteredForEvent(eventModel.id) ?
+                'Registered' : 'Registration open',
                 style: TextStyle(
                   fontSize: 12,
                   color: WHITE_COLOR,

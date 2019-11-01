@@ -1,7 +1,11 @@
 import 'package:atlas/components/primary_button.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/UserModel.dart';
 import 'package:atlas/screens/navigate_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../app_state.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   @override
@@ -11,6 +15,8 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
+    UserModel user = appState.getUser;
     return Scaffold(
       backgroundColor: WHITE_COLOR,
       body: Container(
@@ -20,7 +26,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           children: <Widget>[
             Container(height: 16),
             Text(
-              'Hi there, Roshan.',
+              'Hi there, ${user.name}',
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
@@ -28,7 +34,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ),
             Text(
-              'Welcome to  SNS Allora 2020',
+              'Welcome to the app',
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
@@ -37,7 +43,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
             Container(height: 72),
             Text(
-              'This app is your key to all the events and services offered at SNS Allora 2020.',
+              'This app is your key to all the events and services offered at this fest.',
               style: TextStyle(fontSize: 24),
             ),
             Container(height: 16),

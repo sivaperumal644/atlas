@@ -1,9 +1,11 @@
 import 'package:atlas/components/dialog_style.dart';
 import 'package:atlas/components/secondart_button.dart';
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/UserModel.dart';
 import 'package:atlas/screens/admin_login_screen.dart';
 import 'package:atlas/screens/login_qr_scan_screen.dart';
 import 'package:atlas/screens/on_boarding_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -142,6 +144,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         } else {
+                          if(signInToken.toUpperCase().contains('USER')) {
+                            checkIfQrisLogin(signInToken.toUpperCase(), context);
+                          } else
                           showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -171,6 +176,46 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+  void checkIfQrisLogin(String qrText, context) async {
+    if(qrText.contains('USER')) {
+      print('The QR Text $qrText contains USER');
+      var userReference;
+      showDialog(context: context, barrierDismissible: false, builder: (context) {
+        return AlertDialog(title: Text('Logging you in..'),
+          content: Container(
+            height: 100,
+            width: 100,
+            padding: EdgeInsets.all(16), child: Container(
+              height: 20,
+              width: 50,
+
+              child: LinearProgressIndicator()),),);
+      });
+      try {
+        userReference = await Firestore.instance.collection('users').document(qrText).get();
+      } catch (e) {
+        print(e);
+        Navigator.pop(context);
+      }
+      var newUser = UserModel(
+          redeemedTokens: [],
+          registeredEvents: [],
+          id: userReference['id'],
+          name: userReference['name'],
+          registerno: userReference['registerno'],
+          phone: userReference['phone'],
+          institute: userReference['institute'],
+          degree: userReference['degree'],
+          email: userReference['email']
+      );
+      final appState = Provider.of<AppState>(context);
+      appState.setUser(newUser);
+      Navigator.of(context).pop();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      dispose();
+    }
   }
 
   Widget scanComponent() {

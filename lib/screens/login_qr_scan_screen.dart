@@ -1,8 +1,15 @@
+import 'package:atlas/app_state.dart';
+import 'package:atlas/models/UserModel.dart';
 import 'package:atlas/screens/on_boarding_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
+  final scanToken;
+
+  const QRCodeScannerScreen({Key key, this.scanToken = 'NA'}) : super(key: key);
   @override
   _QRCodeScannerScreenState createState() => _QRCodeScannerScreenState();
 }
@@ -50,6 +57,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => OnBoardingScreen()));
           dispose();
+        } else {
+          checkIfQrisLogin(qrText, context);
         }
       });
     });
@@ -59,5 +68,46 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  void checkIfQrisLogin(String qrText, context) async {
+    if(qrText.contains('USER')) {
+      print('The QR Text $qrText contains USER');
+      var userReference;
+      showDialog(context: context, barrierDismissible: false, builder: (context) {
+        return AlertDialog(title: Text('Logging you in..'),
+        content: Container(
+          height: 100,
+          width: 100,
+          padding: EdgeInsets.all(16), child: Container(
+          height: 20,
+            width: 50,
+
+            child: LinearProgressIndicator()),),);
+      });
+      try {
+        userReference = await Firestore.instance.collection('users').document(qrText).get();
+      } catch (e) {
+        print(e);
+        Navigator.pop(context);
+      }
+      var newUser = UserModel(
+        redeemedTokens: [],
+        registeredEvents: [],
+        id: userReference['id'],
+        name: userReference['name'],
+        registerno: userReference['registerno'],
+        phone: userReference['phone'],
+        institute: userReference['institute'],
+        degree: userReference['degree'],
+        email: userReference['email']
+      );
+      final appState = Provider.of<AppState>(context);
+      appState.setUser(newUser);
+      Navigator.of(context).pop();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      dispose();
+    }
   }
 }

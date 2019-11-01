@@ -1,13 +1,22 @@
 import 'package:atlas/constants/colors.dart';
+import 'package:atlas/models/UserModel.dart';
+import 'package:atlas/screens/login_qr_scan_screen.dart';
 import 'package:atlas/screens/token_redeem_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../app_state.dart';
 
 class TokenListItem extends StatelessWidget {
   final bool isRedeemed;
-
-  const TokenListItem({this.isRedeemed = false});
+  final String tokenTitle;
+  final String tokenType;
+  final String id;
+  const TokenListItem({this.isRedeemed = false, this.tokenTitle, this.tokenType, this.id});
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
+    UserModel currentUser = appState.getUser;
     return Container(
       decoration: BoxDecoration(
         color: WHITE_COLOR,
@@ -36,7 +45,7 @@ class TokenListItem extends StatelessWidget {
             child: dottedLine(),
           ),
           Text(
-            'Vegetarian Lunch',
+            '${tokenTitle}',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -45,7 +54,7 @@ class TokenListItem extends StatelessWidget {
           ),
           Container(height: 4),
           Text(
-            'From 2:30 PM to 3:30 PM',
+            '${tokenType}',
             style: TextStyle(
                 fontSize: 14, color: isRedeemed ? GREY_COLOR : BLACK_COLOR),
           ),
@@ -57,10 +66,19 @@ class TokenListItem extends StatelessWidget {
               onTap: isRedeemed
                   ? null
                   : () {
+                if(appState.getIsAdmin == true) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => QRCodeScannerScreen(
+                    scanToken: id
+                  ) ));
+                } else
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TokenRedeemScreen(),
+                          builder: (context) => TokenRedeemScreen(
+                            id: id,
+                            tokenType: tokenType,
+                            tokenTitle: tokenTitle,
+                          ),
                         ),
                       );
                     },
